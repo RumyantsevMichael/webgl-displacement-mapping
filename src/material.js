@@ -1,13 +1,19 @@
+import {
+    UniformsUtils,
+    UniformsLib,
+    ShaderMaterial,
+    Vector2
+} from 'three';
 import vertexShader from './vertex.glsl';
 import fragmentShader from './fragment.glsl';
 
-const uniforms = THREE.UniformsUtils.merge([
-    THREE.UniformsLib['lights'],
-    THREE.UniformsLib['displacementmap'],
+const uniforms = UniformsUtils.merge([
+    UniformsLib['lights'],
+    UniformsLib['displacementmap'],
     {
         resolution: {
             type: 'v2',
-            value: new THREE.Vector2(window.innerWidth, window.innerHeight)
+            value: new Vector2(window.innerWidth, window.innerHeight)
         },
         rocks: {
             type: 't',
@@ -28,7 +34,7 @@ const uniforms = THREE.UniformsUtils.merge([
     }
 ]);
 
-export default new THREE.ShaderMaterial({
+export default new ShaderMaterial({
     wireframe: false,
     uniforms: uniforms,
     fragmentShader: fragmentShader,

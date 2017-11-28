@@ -1,3 +1,8 @@
+import * as THREE from 'three';
+import OrbitControlsFactory from 'three-orbit-controls';
+
+const OrbitControls = OrbitControlsFactory(THREE);
+
 class Program {
     constructor(rootElement, hooks) {
         this._childrenDictionary = new Map();
@@ -18,8 +23,8 @@ class Program {
             canvas: this.rootElement,
             antialias: true
         });
-        this._controls = new THREE.OrbitControls(this._camera, this.rootElement);
-        
+        this._controls = new OrbitControls(this._camera, this.rootElement);
+
         this._renderer.setSize(window.innerWidth, window.innerHeight);
         this._renderer.setClearColor(0xf0f0f0);
         this._renderer.shadowMap.type = THREE.PCFSoftShadowMap;

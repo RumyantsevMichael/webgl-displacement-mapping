@@ -1,5 +1,5 @@
 {
-  "name": "threejs",
+  "name": "webgl-displacement-mapping",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,10 +9,11 @@
     "build": "./node_modules/.bin/webpack",
     "build-dev": "./node_modules/.bin/webpack --watch"
   },
-  "author": "",
+  "author": "Michael Rumyantsev <Rumyantsev.Michael@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "three": "^0.84.0"
+    "three": "^0.84.0",
+    "three-orbit-controls": "^82.1.0"
   },
   "devDependencies": {
     "live-server": "^1.2.0",
