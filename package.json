@@ -1,0 +1,22 @@
+{
+  "name": "threejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/live-server --port=8000",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack",
+    "build-dev": "./node_modules/.bin/webpack --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.84.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.0",
+    "raw-loader": "^0.5.1",
+    "webpack": "^3.8.1"
+  }
+}
