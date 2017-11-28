@@ -60,88 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Program__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextureManager__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__material__ = __webpack_require__(3);
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const canvasElement = document.querySelector('#canvas');
-
-    const displacementRangeElement = document.querySelector('#displacementScale');
-    const displacementViewElement = document.querySelector('#displacementScaleView');
-
-    displacementRangeElement.addEventListener('input', event => {
-        event.stopPropagation();
-
-        displacementViewElement.value = event.target.value;
-        __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementScale.value = event.target.value;
-    });
-
-    const textureManager = new __WEBPACK_IMPORTED_MODULE_2__TextureManager__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_0_three__["TextureLoader"]());
-    
-    textureManager.load('pebbles_color', './textures/Pebbles_002_COLOR.jpg');
-    textureManager.load('pebbles_displacement', './textures/Pebbles_002_DISP.png');
-    textureManager.load('pebbles_normal', './textures/Pebbles_002_NRM.jpg');
-    textureManager.load('sand_color', './textures/Sand 002_COLOR.jpg');
-    textureManager.load('sand_displacement', './textures/Sand_001_DISP.png');
-
-    const program = new __WEBPACK_IMPORTED_MODULE_1__Program__["a" /* default */](canvasElement, {
-        init: (program) => {
-            const plane = new __WEBPACK_IMPORTED_MODULE_0_three__["Mesh"](
-                new __WEBPACK_IMPORTED_MODULE_0_three__["PlaneGeometry"](10, 10, 250, 250),
-                __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */]
-            );
-            const light = new __WEBPACK_IMPORTED_MODULE_0_three__["PointLight"](0xf0f0ff, 1.0);
-    
-            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.rocks.value = textureManager.get('pebbles_color');
-            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.sand.value = textureManager.get('sand_color');
-            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.sandD.value = textureManager.get('sand_displacement');
-            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementMap.value = textureManager.get('pebbles_displacement');
-            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementScale.value = 0;
-            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementBias.value = 0;
-            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.normalMap.value = textureManager.get('pebbles_normal');
-    
-            plane.rotation.x = 0.5 * Math.PI;
-            plane.rotation.y = Math.PI;
-    
-            program.camera.position.z = -10;
-            program.camera.position.x = -10;
-            program.camera.position.y = 10;
-    
-            program.camera.lookAt(plane.position);
-    
-            program.add('plane', plane);
-            program.add('light', light);
-        },
-        update: (program) => {
-            const light = program.get('light');
-            const date = Date.now() / 1000;
-    
-            light.position.x = Math.sin(date) * 15;
-            light.position.z = Math.cos(date) * 15;
-            light.position.y = 15;
-        }
-    });
-});
-
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43440,97 +43363,89 @@ function CanvasRenderer() {
 
 
 /***/ }),
-/* 2 */,
-/* 3 */
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vertex_glsl__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vertex_glsl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__vertex_glsl__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fragment_glsl__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fragment_glsl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__fragment_glsl__);
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Program__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextureManager__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__material__ = __webpack_require__(5);
 
 
 
 
-const uniforms = __WEBPACK_IMPORTED_MODULE_0_three__["UniformsUtils"].merge([
-    __WEBPACK_IMPORTED_MODULE_0_three__["UniformsLib"]['lights'],
-    __WEBPACK_IMPORTED_MODULE_0_three__["UniformsLib"]['displacementmap'],
-    {
-        resolution: {
-            type: 'v2',
-            value: new __WEBPACK_IMPORTED_MODULE_0_three__["Vector2"](window.innerWidth, window.innerHeight)
+
+document.addEventListener('DOMContentLoaded', () => {
+    const canvasElement = document.querySelector('#canvas');
+
+    const displacementRangeElement = document.querySelector('#displacementScale');
+    const displacementViewElement = document.querySelector('#displacementScaleView');
+
+    displacementRangeElement.addEventListener('input', event => {
+        event.stopPropagation();
+
+        displacementViewElement.value = event.target.value;
+        __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementScale.value = event.target.value;
+    });
+
+    const textureManager = new __WEBPACK_IMPORTED_MODULE_2__TextureManager__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_0_three__["TextureLoader"]());
+    
+    textureManager.load('pebbles_color', './textures/Pebbles_002_COLOR.jpg');
+    textureManager.load('pebbles_displacement', './textures/Pebbles_002_DISP.png');
+    textureManager.load('pebbles_normal', './textures/Pebbles_002_NRM.jpg');
+    textureManager.load('sand_color', './textures/Sand 002_COLOR.jpg');
+    textureManager.load('sand_displacement', './textures/Sand_001_DISP.png');
+
+    const program = new __WEBPACK_IMPORTED_MODULE_1__Program__["a" /* default */](canvasElement, {
+        init: (program) => {
+            const plane = new __WEBPACK_IMPORTED_MODULE_0_three__["Mesh"](
+                new __WEBPACK_IMPORTED_MODULE_0_three__["PlaneGeometry"](10, 10, 250, 250),
+                __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */]
+            );
+            const light = new __WEBPACK_IMPORTED_MODULE_0_three__["PointLight"](0xf0f0ff, 1.0);
+    
+            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.rocks.value = textureManager.get('pebbles_color');
+            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.sand.value = textureManager.get('sand_color');
+            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.sandD.value = textureManager.get('sand_displacement');
+            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementMap.value = textureManager.get('pebbles_displacement');
+            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementScale.value = 0;
+            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.displacementBias.value = 0;
+            __WEBPACK_IMPORTED_MODULE_3__material__["a" /* default */].uniforms.normalMap.value = textureManager.get('pebbles_normal');
+    
+            plane.rotation.x = 0.5 * Math.PI;
+            plane.rotation.y = Math.PI;
+    
+            program.camera.position.z = -10;
+            program.camera.position.x = -10;
+            program.camera.position.y = 10;
+    
+            program.camera.lookAt(plane.position);
+    
+            program.add('plane', plane);
+            program.add('light', light);
         },
-        rocks: {
-            type: 't',
-            value: null
-        },
-        sand: {
-            type: 't',
-            value: null
-        },
-        sandD: {
-            type: 't',
-            value: null
-        },
-        normalMap: {
-            type: 't',
-            value: null
+        update: (program) => {
+            const light = program.get('light');
+            const date = Date.now() / 1000;
+    
+            light.position.x = Math.sin(date) * 15;
+            light.position.z = Math.cos(date) * 15;
+            light.position.y = 15;
         }
-    }
-]);
+    });
+});
 
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_three__["ShaderMaterial"]({
-    wireframe: false,
-    uniforms: uniforms,
-    fragmentShader: __WEBPACK_IMPORTED_MODULE_2__fragment_glsl___default.a,
-    vertexShader: __WEBPACK_IMPORTED_MODULE_1__vertex_glsl___default.a,
-    lights: true
-}));
+
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = "varying vec2 vUv;\r\nvarying vec3 vPos;\r\nvarying vec3 vNormal;\r\n\r\nuniform sampler2D displacementMap;\r\nuniform float displacementScale;\r\nuniform float displacementBias;\r\nuniform sampler2D normalMap;\r\n\r\nfloat brightness(vec4 texture)\r\n{\r\n    return (0.2126 * texture.r + 0.7152 * texture.g + 0.0722 * texture.b);\r\n}\r\n\r\nvoid main(void)\r\n{\r\n    vUv = uv;\r\n    vPos = (modelViewMatrix * vec4(position, 1.0)).xyz;\r\n    vec3 n = normalize(texture2D(normalMap, uv).xyz * 2.0 - 1.0);\r\n    n.y = -n.y;\r\n    vNormal = normalMatrix * n;\r\n    vec4 color = texture2D(displacementMap, uv);\r\n    vec3 newPosition = position + normal * (color.x * displacementScale + displacementBias);\r\n\r\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);\r\n}\r\n"
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = "varying vec2 vUv;\r\nvarying vec3 vPos;\r\nvarying vec3 vNormal;\r\n\r\nstruct PointLight\r\n{\r\n    vec3 color;\r\n    vec3 position;\r\n    float decay;\r\n    float distance;\r\n};\r\n\r\nuniform vec2 resolution;\r\nuniform sampler2D sand;\r\nuniform sampler2D rocks;\r\nuniform sampler2D sandD;\r\nuniform sampler2D displacementMap;\r\nuniform sampler2D normalMap;\r\nuniform PointLight pointLights[NUM_POINT_LIGHTS];\r\n\r\nfloat brightness(vec4 texture)\r\n{\r\n    return (0.2126 * texture.r + 0.7152 * texture.g + 0.0722 * texture.b);\r\n}\r\n\r\nvec3 blend(vec4 tex1, vec4 disp1, float a1, vec4 tex2, vec4 disp2, float a2)\r\n{\r\n    float depth = 0.2;\r\n    float brightness1 = brightness(tex1);\r\n    float brightness2 = brightness(tex2);\r\n    float ma = max(brightness1 + a1, brightness2 + a2) - depth;\r\n    float b1 = max(brightness1 + a1 - ma, 0.0);\r\n    float b2 = max(brightness2 + a2 - ma, 0.0);\r\n\r\n    return (tex1.rgb * b1 + tex2.rgb * b2) / (b1 + b2);\r\n    // return tex1.rgb * a1 + tex2.rgb * a2;\r\n}\r\n\r\nvoid main( void )\r\n{\r\n    vec4 sandVec = texture2D(sand, vUv);\r\n    vec4 rocksVec = texture2D(rocks, vUv);\r\n    vec4 sandDVec = texture2D(sandD, vUv);\r\n    vec4 rocksDVect = texture2D(displacementMap, vUv);\r\n    vec3 diffuse = blend(sandVec, sandDVec, vUv.y, rocksVec, rocksDVect, 1.0 - vUv.y);\r\n    vec4 lights = vec4(0.1, 0.1, 0.1, 1.0);\r\n\r\n    for (int l = 0; l < NUM_POINT_LIGHTS; l++)\r\n    {\r\n        PointLight light = pointLights[l];\r\n        vec3 lightDirection = normalize(vPos - light.position);\r\n        lights.rgb += clamp(dot(-lightDirection, vNormal), 0.0, 1.0) * light.color;\r\n    }\r\n\r\n    gl_FragColor = vec4(diffuse, 1.0) * lights;\r\n}\r\n"
-
-/***/ }),
-/* 6 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class TextureManager {
-    constructor(loader) {
-        this.loader = loader;
-        this.registry = new Map();
-    }
-
-    load(id, url) {
-        this.registry.set(id, this.loader.load(url));
-    }
-
-    get(id) {
-        return this.registry.get(id);
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (TextureManager);
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_three_orbit_controls__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_three_orbit_controls__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_three_orbit_controls___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_three_orbit_controls__);
 
 
@@ -43609,7 +43524,7 @@ class Program {
 
 
 /***/ }),
-/* 8 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = function( THREE ) {
@@ -44633,6 +44548,90 @@ module.exports = function( THREE ) {
 	return OrbitControls;
 };
 
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class TextureManager {
+    constructor(loader) {
+        this.loader = loader;
+        this.registry = new Map();
+    }
+
+    load(id, url) {
+        this.registry.set(id, this.loader.load(url));
+    }
+
+    get(id) {
+        return this.registry.get(id);
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (TextureManager);
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vertex_glsl__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vertex_glsl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__vertex_glsl__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fragment_glsl__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fragment_glsl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__fragment_glsl__);
+
+
+
+
+const uniforms = __WEBPACK_IMPORTED_MODULE_0_three__["UniformsUtils"].merge([
+    __WEBPACK_IMPORTED_MODULE_0_three__["UniformsLib"]['lights'],
+    __WEBPACK_IMPORTED_MODULE_0_three__["UniformsLib"]['displacementmap'],
+    {
+        resolution: {
+            type: 'v2',
+            value: new __WEBPACK_IMPORTED_MODULE_0_three__["Vector2"](window.innerWidth, window.innerHeight)
+        },
+        rocks: {
+            type: 't',
+            value: null
+        },
+        sand: {
+            type: 't',
+            value: null
+        },
+        sandD: {
+            type: 't',
+            value: null
+        },
+        normalMap: {
+            type: 't',
+            value: null
+        }
+    }
+]);
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_three__["ShaderMaterial"]({
+    wireframe: false,
+    uniforms: uniforms,
+    fragmentShader: __WEBPACK_IMPORTED_MODULE_2__fragment_glsl___default.a,
+    vertexShader: __WEBPACK_IMPORTED_MODULE_1__vertex_glsl___default.a,
+    lights: true
+}));
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = "varying vec2 vUv;\r\nvarying vec3 vPos;\r\nvarying vec3 vNormal;\r\n\r\nuniform sampler2D displacementMap;\r\nuniform float displacementScale;\r\nuniform float displacementBias;\r\nuniform sampler2D normalMap;\r\n\r\nfloat brightness(vec4 texture)\r\n{\r\n    return (0.2126 * texture.r + 0.7152 * texture.g + 0.0722 * texture.b);\r\n}\r\n\r\nvoid main(void)\r\n{\r\n    vUv = uv;\r\n    vPos = (modelViewMatrix * vec4(position, 1.0)).xyz;\r\n    vec3 n = normalize(texture2D(normalMap, uv).xyz * 2.0 - 1.0);\r\n    n.y = -n.y;\r\n    vNormal = normalMatrix * n;\r\n    vec4 color = texture2D(displacementMap, uv);\r\n    vec3 newPosition = position + normal * (color.x * displacementScale + displacementBias);\r\n\r\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);\r\n}\r\n"
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = "varying vec2 vUv;\r\nvarying vec3 vPos;\r\nvarying vec3 vNormal;\r\n\r\nstruct PointLight\r\n{\r\n    vec3 color;\r\n    vec3 position;\r\n    float decay;\r\n    float distance;\r\n};\r\n\r\nuniform vec2 resolution;\r\nuniform sampler2D sand;\r\nuniform sampler2D rocks;\r\nuniform sampler2D sandD;\r\nuniform sampler2D displacementMap;\r\nuniform sampler2D normalMap;\r\nuniform PointLight pointLights[NUM_POINT_LIGHTS];\r\n\r\nfloat brightness(vec4 texture)\r\n{\r\n    return (0.2126 * texture.r + 0.7152 * texture.g + 0.0722 * texture.b);\r\n}\r\n\r\nvec3 blend(vec4 tex1, vec4 disp1, float a1, vec4 tex2, vec4 disp2, float a2)\r\n{\r\n    float depth = 0.2;\r\n    float brightness1 = brightness(tex1);\r\n    float brightness2 = brightness(tex2);\r\n    float ma = max(brightness1 + a1, brightness2 + a2) - depth;\r\n    float b1 = max(brightness1 + a1 - ma, 0.0);\r\n    float b2 = max(brightness2 + a2 - ma, 0.0);\r\n\r\n    return (tex1.rgb * b1 + tex2.rgb * b2) / (b1 + b2);\r\n    // return tex1.rgb * a1 + tex2.rgb * a2;\r\n}\r\n\r\nvoid main( void )\r\n{\r\n    vec4 sandVec = texture2D(sand, vUv);\r\n    vec4 rocksVec = texture2D(rocks, vUv);\r\n    vec4 sandDVec = texture2D(sandD, vUv);\r\n    vec4 rocksDVect = texture2D(displacementMap, vUv);\r\n    vec3 diffuse = blend(sandVec, sandDVec, vUv.y, rocksVec, rocksDVect, 1.0 - vUv.y);\r\n    vec4 lights = vec4(0.1, 0.1, 0.1, 1.0);\r\n\r\n    for (int l = 0; l < NUM_POINT_LIGHTS; l++)\r\n    {\r\n        PointLight light = pointLights[l];\r\n        vec3 lightDirection = normalize(vPos - light.position);\r\n        lights.rgb += clamp(dot(-lightDirection, vNormal), 0.0, 1.0) * light.color;\r\n    }\r\n\r\n    gl_FragColor = vec4(diffuse, 1.0) * lights;\r\n}\r\n"
 
 /***/ })
 /******/ ]);
